@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MellonAPI.Data;
 using MellonAPI.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Identity.Web.Resource;
 
 namespace MellonAPI.Controllers
 {
@@ -23,6 +25,7 @@ namespace MellonAPI.Controllers
 
         // GET: api/Authors
         [HttpGet]
+        [Authorize("read:authors")]
         public async Task<ActionResult<IEnumerable<Author>>> GetAuthors()
         {
           if (_context.Authors == null)
@@ -34,6 +37,7 @@ namespace MellonAPI.Controllers
 
         // GET: api/Authors/5
         [HttpGet("{id}")]
+        [Authorize("read:authors")]
         public async Task<ActionResult<Author>> GetAuthor(int id)
         {
           if (_context.Authors == null)
@@ -53,6 +57,7 @@ namespace MellonAPI.Controllers
         // PUT: api/Authors/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize("write:authors")]
         public async Task<IActionResult> PutAuthor(int id, Author author)
         {
             if (id != author.Id)
@@ -84,6 +89,7 @@ namespace MellonAPI.Controllers
         // POST: api/Authors
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize("write:authors")]
         public async Task<ActionResult<Author>> PostAuthor(Author author)
         {
           if (_context.Authors == null)
@@ -98,6 +104,7 @@ namespace MellonAPI.Controllers
 
         // DELETE: api/Authors/5
         [HttpDelete("{id}")]
+        [Authorize("write:authors")]
         public async Task<IActionResult> DeleteAuthor(int id)
         {
             if (_context.Authors == null)
