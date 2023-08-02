@@ -28,7 +28,7 @@ jobs:
           dotnet tool install dotnet-ef
 
       - name: Bundle migrations
-        run: dotnet ef migrations bundle --output ${{env.DOTNET_ROOT}}/efbundle.exe --project MellonAPI
+        run: dotnet ef migrations bundle --output ${{env.DOTNET_ROOT}}/efbundle.exe --project MellonAPI --verbose
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
