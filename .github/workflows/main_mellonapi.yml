@@ -26,15 +26,15 @@ jobs:
         run: |
           dotnet new tool-manifest
           dotnet tool install dotnet-ef
-
-      - name: Generate migration bundle
-        run: dotnet ef migrations bundle --project MellonAPI --configuration Bundle --verbose
-
+          
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        
+      - name: Generate migration bundle
+        run: dotnet ef migrations bundle --project MellonAPI --configuration Bundle --verbose -o ${{env.DOTNET_ROOT}}/myapp/efbundle.exe
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
