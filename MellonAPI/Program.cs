@@ -15,10 +15,8 @@ public class Program
 
         // Add services to the container.
 
-        string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-
         builder.Services.AddDbContext<MellonAPIContext>(
-            options => options.UseSqlite($"Data Source={folderPath}/mellon.db;Cache=Shared"));
+            options => options.UseSqlite("Data Source=mellon.db;Cache=Shared"));
 
         builder.Services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
 
