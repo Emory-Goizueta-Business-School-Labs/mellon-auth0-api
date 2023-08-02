@@ -1,18 +1,9 @@
-using MellonAPI.Data;
-using Microsoft.EntityFrameworkCore;
-using MellonAPI.Controllers;
-using MellonAPI.Models;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using JWT.Extensions.AspNetCore;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.OpenApi.Models;
-using Auth0.AspNetCore.Authentication;
-using Microsoft.IdentityModel.Tokens;
-using System.Text.Json;
-using Microsoft.Identity.Web;
 using MellonAPI.Authorization;
+using MellonAPI.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 namespace MellonAPI;
 
