@@ -27,11 +27,11 @@ jobs:
           dotnet new tool-manifest
           dotnet tool install dotnet-ef
 
+      - name: Bundle migrations
+        run: dotnet ef migrations bundle --output ${{env.DOTNET_ROOT}}/efbundle.exe
+
       - name: Build with dotnet
         run: dotnet build --configuration Release
-
-      - name: Bundle migrations
-        run: dotnet ef migrations bundle --self-contained -r win-x64 --project MellonAPI --verbose --output ${{env.DOTNET_ROOT}}/efbundle.exe
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
