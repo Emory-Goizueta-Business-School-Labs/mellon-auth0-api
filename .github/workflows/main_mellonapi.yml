@@ -34,7 +34,7 @@ jobs:
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
         
       - name: Generate migration bundle
-        run: dotnet ef migrations bundle --project MellonAPI --configuration Bundle --verbose -o ${{env.DOTNET_ROOT}}/myapp/MellonAPI/efbundle.exe
+        run: dotnet ef migrations bundle --project MellonAPI --configuration Bundle --verbose -o ${{env.DOTNET_ROOT}}/myapp/efbundle.exe
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
@@ -65,4 +65,4 @@ jobs:
           package: .
 
       - name: Migrate Database
-        run: ./MellonAPI/efbundle.exe
+        run: ./efbundle.exe
