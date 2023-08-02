@@ -25,7 +25,7 @@ namespace MellonAPI.Controllers
 
         // GET: api/Authors
         [HttpGet]
-        [Authorize("read:authors")]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Author>>> GetAuthors()
         {
           if (_context.Authors == null)
@@ -37,7 +37,7 @@ namespace MellonAPI.Controllers
 
         // GET: api/Authors/5
         [HttpGet("{id}")]
-        [Authorize("read:authors")]
+        [Authorize]
         public async Task<ActionResult<Author>> GetAuthor(int id)
         {
           if (_context.Authors == null)

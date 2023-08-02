@@ -25,7 +25,7 @@ namespace MellonAPI.Controllers
 
         // GET: api/Books
         [HttpGet]
-        [Authorize("read:books")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Book>>> GetBooks()
         {
           if (_context.Books == null)
@@ -37,7 +37,7 @@ namespace MellonAPI.Controllers
 
         // GET: api/Books/5
         [HttpGet("{id}")]
-        [Authorize("read:books")]
+        [AllowAnonymous]
         public async Task<ActionResult<Book>> GetBook(int id)
         {
           if (_context.Books == null)
