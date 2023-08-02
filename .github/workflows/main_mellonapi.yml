@@ -25,8 +25,17 @@ jobs:
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
+      - name: Bundle migrations
+        run: dotnet ef migrations bundle --project MellonAPI --verbose -r win-x64 --self-contained --output ${{env.DOTNET_ROOT}}/efbundle.exe
+
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+
+      - name: Upload bundle for deployment job
+        uses: actions/upload-artifact@v2
+        with:
+          name: .efbundle
+          path: ${{env.DOTNET_ROOT}}/efbundle.exe
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
@@ -47,6 +56,11 @@ jobs:
         with:
           name: .net-app
 
+      - name: Download bundle from build job
+        uses: actions/download-artifact@v2
+        with:
+          name: .efbundle
+
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
@@ -55,3 +69,6 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_963A4898A01A440F9B50B2076918551D }}
           package: .
+
+      - name: Migrate Database
+        run: efbundle.exe
