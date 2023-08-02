@@ -25,7 +25,7 @@ public class Program
         // Add services to the container.
 
         builder.Services.AddDbContext<MellonAPIContext>(
-            options => options.UseSqlite("Data Source=mellon.db;Cache=Shared"));
+            options => options.UseSqlite("Data Source=data/mellon.db;Cache=Shared"));
 
         builder.Services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
 
@@ -57,11 +57,8 @@ public class Program
         {
             option.AddSecurityDefinition("Auth0", new OpenApiSecurityScheme()
             {
-                //In = ParameterLocation.Header,
-                //Name = "Authorization",
                 Type = SecuritySchemeType.OAuth2,
                 BearerFormat = "JWT",
-                //Scheme = "Bearer",
                 Flows = new OpenApiOAuthFlows()
                 {
                     AuthorizationCode = new OpenApiOAuthFlow()
@@ -76,9 +73,7 @@ public class Program
                         },
                         TokenUrl = new Uri($"{builder.Configuration["Auth0:Domain"]}/oauth/token"),
                     }
-                },
-                //OpenIdConnectUrl = new Uri("https://dev-m7xcpastcq3g568p.us.auth0.com/.well-known/openid-configuration"),
-                 
+                }                 
             });
             option.AddSecurityRequirement(new OpenApiSecurityRequirement()
             {
@@ -91,7 +86,7 @@ public class Program
                             Id = "Auth0"
                         }
                     },                    
-                    new []{ "read:authors" }
+                    new string[]{ }
                 }
             });
         });
@@ -124,4 +119,3 @@ public class Program
         app.Run();
     }
 }
-
