@@ -31,7 +31,7 @@ jobs:
         run: dotnet build --configuration Release
 
       - name: Bundle migrations
-        run: dotnet ef migrations bundle --project MellonAPI --verbose -r win-x64 --self-contained --output ${{env.DOTNET_ROOT}}/efbundle.exe
+        run: dotnet ef migrations bundle --self-contained -r win-x64 --project MellonAPI --verbose --output ${{env.DOTNET_ROOT}}/efbundle.exe
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
