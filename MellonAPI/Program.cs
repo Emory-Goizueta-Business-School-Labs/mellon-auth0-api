@@ -85,8 +85,8 @@ public class Program
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
-        {
+        //if (app.Environment.IsDevelopment())
+        //{
             app.UseSwagger();
             app.UseSwaggerUI(settings =>
             {
@@ -94,16 +94,13 @@ public class Program
                 {
                     { "audience", app.Configuration["Auth0:Audience"] }
                 });
-                settings.OAuthClientId(app.Configuration["Auth0:ClientId"]);
-                settings.OAuthClientSecret(app.Configuration["Auth0:ClientSecret"]);
             });
-        }
+        //}
 
         app.UseHttpsRedirection();
 
         app.UseAuthentication();
         app.UseAuthorization();
-
 
         app.MapControllers();
 
