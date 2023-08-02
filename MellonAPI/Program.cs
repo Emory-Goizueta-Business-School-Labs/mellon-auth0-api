@@ -16,7 +16,7 @@ public class Program
         // Add services to the container.
 
         builder.Services.AddDbContext<MellonAPIContext>(
-            options => options.UseSqlite("Data Source=data/mellon.db;Cache=Shared"));
+            options => options.UseSqlite("Data Source=mellon.db;Cache=Shared"));
 
         builder.Services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
 
