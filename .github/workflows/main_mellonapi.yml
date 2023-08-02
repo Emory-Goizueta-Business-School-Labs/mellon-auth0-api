@@ -27,8 +27,8 @@ jobs:
           dotnet new tool-manifest
           dotnet tool install dotnet-ef
 
-      - name: Bundle migrations
-        run: dotnet ef migrations bundle --output ${{env.DOTNET_ROOT}}/efbundle.exe --project MellonAPI --verbose
+      - name: Generate migration bundle
+        run: dotnet ef migrations bundle --startup-project MellonAPI --output ${{env.DOTNET_ROOT}}/myapp/efbundle.exe --configuration Bundle
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
@@ -61,11 +61,6 @@ jobs:
         with:
           name: .net-app
 
-      - name: Download bundle from build job
-        uses: actions/download-artifact@v2
-        with:
-          name: .efbundle
-
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
@@ -76,4 +71,4 @@ jobs:
           package: .
 
       - name: Migrate Database
-        run: efbundle.exe
+        run: ./efbundle.exe
