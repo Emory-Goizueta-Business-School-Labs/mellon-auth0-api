@@ -11,61 +11,60 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace MellonAPI.Controllers
 {
-    
     [Route("api/[controller]")]
     [ApiController]
-    public class BooksController : ControllerBase
+    public class ToDosController : ControllerBase
     {
         private readonly MellonAPIContext _context;
 
-        public BooksController(MellonAPIContext context)
+        public ToDosController(MellonAPIContext context)
         {
             _context = context;
         }
 
-        // GET: api/Books
+        // GET: api/ToDos
         [HttpGet]
-        [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<Book>>> GetBooks()
+        [Authorize("read:todos")]
+        public async Task<ActionResult<IEnumerable<ToDo>>> GetToDos()
         {
-          if (_context.Books == null)
+          if (_context.ToDos == null)
           {
               return NotFound();
           }
-            return await _context.Books.ToListAsync();
+            return await _context.ToDos.ToListAsync();
         }
 
-        // GET: api/Books/5
+        // GET: api/ToDos/5
         [HttpGet("{id}")]
-        [AllowAnonymous]
-        public async Task<ActionResult<Book>> GetBook(int id)
+        [Authorize("read:todos")]
+        public async Task<ActionResult<ToDo>> GetToDo(int id)
         {
-          if (_context.Books == null)
+          if (_context.ToDos == null)
           {
               return NotFound();
           }
-            var book = await _context.Books.FindAsync(id);
+            var toDo = await _context.ToDos.FindAsync(id);
 
-            if (book == null)
+            if (toDo == null)
             {
                 return NotFound();
             }
 
-            return book;
+            return toDo;
         }
 
-        // PUT: api/Books/5
+        // PUT: api/ToDos/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        [Authorize("write:books")]
-        public async Task<IActionResult> PutBook(int id, Book book)
+        [Authorize("write:todos")]
+        public async Task<IActionResult> PutToDo(int id, ToDo toDo)
         {
-            if (id != book.Id)
+            if (id != toDo.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(book).State = EntityState.Modified;
+            _context.Entry(toDo).State = EntityState.Modified;
 
             try
             {
@@ -73,7 +72,7 @@ namespace MellonAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!BookExists(id))
+                if (!ToDoExists(id))
                 {
                     return NotFound();
                 }
@@ -86,46 +85,46 @@ namespace MellonAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Books
+        // POST: api/ToDos
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        [Authorize("write:books")]
-        public async Task<ActionResult<Book>> PostBook(Book book)
+        [Authorize("write:todos")]
+        public async Task<ActionResult<ToDo>> PostToDo(ToDo toDo)
         {
-          if (_context.Books == null)
+          if (_context.ToDos == null)
           {
-              return Problem("Entity set 'MellonAPIContext.Books'  is null.");
+              return Problem("Entity set 'MellonAPIContext.ToDos'  is null.");
           }
-            _context.Books.Add(book);
+            _context.ToDos.Add(toDo);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetBook", new { id = book.Id }, book);
+            return CreatedAtAction("GetToDo", new { id = toDo.Id }, toDo);
         }
 
-        // DELETE: api/Books/5
+        // DELETE: api/ToDos/5
         [HttpDelete("{id}")]
-        [Authorize("write:books")]
-        public async Task<IActionResult> DeleteBook(int id)
+        [Authorize("write:todos")]
+        public async Task<IActionResult> DeleteToDo(int id)
         {
-            if (_context.Books == null)
+            if (_context.ToDos == null)
             {
                 return NotFound();
             }
-            var book = await _context.Books.FindAsync(id);
-            if (book == null)
+            var toDo = await _context.ToDos.FindAsync(id);
+            if (toDo == null)
             {
                 return NotFound();
             }
 
-            _context.Books.Remove(book);
+            _context.ToDos.Remove(toDo);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool BookExists(int id)
+        private bool ToDoExists(int id)
         {
-            return (_context.Books?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.ToDos?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

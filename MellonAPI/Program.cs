@@ -33,7 +33,7 @@ public class Program
 
         builder.Services.AddAuthorization(options =>
         {
-            string[] scopes = { "read:authors", "write:authors", "read:books", "write:books" };
+            string[] scopes = { "read:todos", "write:todos" };
 
             foreach(string scope in scopes)
             {
@@ -57,10 +57,8 @@ public class Program
                         AuthorizationUrl = new Uri($"{builder.Configuration["Auth0:Domain"]}/authorize"),
                         Scopes = new Dictionary<string,string>()
                         {
-                            { "read:authors", "Read authors" },
-                            { "write:authors", "Create, edit, and delete authors" },
-                            { "read:books", "Read books" },
-                            { "write:books", "Create, edit, and delete books" }
+                            { "read:todos", "Read todos" },
+                            { "write:todos", "Create, edit, and delete todos" }
                         },
                         TokenUrl = new Uri($"{builder.Configuration["Auth0:Domain"]}/oauth/token"),
                     }

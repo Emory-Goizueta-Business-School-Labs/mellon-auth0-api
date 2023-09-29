@@ -6,10 +6,9 @@ namespace MellonAPI.Data
 {
 	public class MellonAPIContext : DbContext
 	{
-		public DbSet<Author> Authors { get; set; }
-		public DbSet<Book> Books { get; set; }
+		public DbSet<ToDo> ToDos { get; set; }
 
-		public MellonAPIContext(DbContextOptions<MellonAPIContext> options)
+        public MellonAPIContext(DbContextOptions<MellonAPIContext> options)
 			: base(options)
 		{
 		}
